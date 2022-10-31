@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const bird = document.querySelector('.bird');
     const gameDisplay = document.querySelector('.game-container');
     const ground = document.querySelector('.ground');
+    const start = document.querySelector(".Start")
 
     let birdLeft = 220;
     let birdBottom = 100;
@@ -11,25 +12,27 @@ document.addEventListener('DOMContentLoaded', ()=>{
     let gap = 430;
 
 
+    start.addEventListener('click', pressGo)
     function pressGo(){ 
-        const start = document.createElement('button'); 
-        start.innerText = "Go"
-        document.body.appendChild(start);
+        letsGo = true; 
+        start.style.opacity = 0;
     } 
-    pressGo()
 
     function startGame(){ 
+        if (letsGo) { 
+            birdBottom -= gravity
+            bird.style.bottom = birdBottom + 'px';
+            bird.style.left = birdLeft + 'px'
 
-        birdBottom -= gravity
-        bird.style.bottom = birdBottom + 'px';
-        bird.style.left = birdLeft + 'px'
+        }
     }
 
-     let gameTimerID = setInterval(startGame, 20);
-     //clearInterval(timerId);
+     
+    let  gameTimerID = setInterval(startGame, 20);
+    //clearInterval(timerId);
 
      function control(e){ 
-        if(e.keyCode ===32){ 
+        if(e.keyCode = 32 || 87|| 38){ 
             jump()
         }
      }
@@ -40,7 +43,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         console.log(birdBottom);
      }
 
-     document.addEventListener('keyup', control);
+     document.addEventListener('keydown', control);
 
      function generateObstacle(){ 
         let obstacleLeft = 500;
@@ -60,9 +63,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
         topObstacle.style.bottom = obstacleBottom + gap +  'px';
 
         function moveObstacle(){ 
-            obstacleLeft-=2
-            obstacle.style.left = obstacleLeft + 'px';
-            topObstacle.style.left = obstacleLeft + 'px'
+            if(letsGo){ 
+                obstacleLeft-=2
+                obstacle.style.left = obstacleLeft + 'px';
+                topObstacle.style.left = obstacleLeft + 'px'
+
+            }
 
             if (obstacleLeft === -60){ 
                 clearInterval(timeId);
@@ -92,8 +98,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
      function gameOver(){ 
         clearInterval(gameTimerID);
          isGameOver = true;
-         document.removeEventListener('keyup', control);
-         
+         document.removeEventListener('keydown', control);
+         letsGo = false;
+         alert("Gamer-Over");
+         document. location. reload() 
      }
 })
 
