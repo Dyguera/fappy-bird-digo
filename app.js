@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     //clearInterval(timerId);
 
      function control(e){ 
-        if(e.keyCode = 32 || 87|| 38){ 
+        if(e.keyCode =32 || 87|| 38){ 
             jump()
         }
      }
